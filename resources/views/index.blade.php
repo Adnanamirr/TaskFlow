@@ -7,7 +7,11 @@
 </head>
 <body>
 <h1>Welcome to TaskFlow</h1>
-
-<a href="{{ route('tasks.index') }}">Go to Tasks</a>
+<ul>
+    @foreach ($tasks as $task)
+        <li>{{ $task->title }} - {{ $task->completed ? 'Completed' : 'Pending' }}</li>
+    @endforeach
+</ul>
+<a href="/">Go Back</a>
 </body>
 </html>
