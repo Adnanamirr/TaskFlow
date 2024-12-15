@@ -12,3 +12,7 @@ Route::get('/tasks', function () {
         'tasks' => Task::latest()->paginate()
     ]);
 })->name('tasks.index');
+
+Route::post('/create',function (){
+    return view('create');
+})->name('tasks.create');
