@@ -7,6 +7,11 @@
 </head>
 <body>
 <h1>Welcome to TaskFlow</h1>
+@if(session('success'))
+    <div style="color: green;">
+        {{ session('success') }}
+    </div>
+@endif
 <ul>
     @foreach ($tasks as $task)
         <div>
@@ -17,5 +22,6 @@
     @endforeach
 </ul>
 <a href="/">Go Back</a>
+<a href="{{ route('tasks.create') }}">Create Task</a>
 </body>
 </html>

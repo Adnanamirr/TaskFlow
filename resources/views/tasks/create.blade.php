@@ -7,15 +7,16 @@
 </head>
 <body>
 <h1>Create a New Task</h1>
-<form action='#' method="POST">
+<form action="{{route('tasks.store')}}" method="POST">
     @csrf
     <label for="title">Task Title:</label>
     <input type="text" name="title" id="title" required>
 
     <label for="description">Description:</label>
     <textarea name="description" id="description" required></textarea>
+    <input type="hidden" name="project_id" value="1">
 
-    <button type="submit">Save Task</button>
+    <button type="submit">Create Task</button>
 </form>
 </body>
 </html>

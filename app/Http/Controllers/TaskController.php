@@ -22,7 +22,8 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        return view('tasks.create');
+
     }
 
     /**
@@ -30,7 +31,19 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'required',
+            'project_id' => 'required|exists:projects,id',
+        ]);
+
+        $task = Task::create([
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+            'project_id' => $validated['project_id'],
+        ]);
+
+        return redirect()->route('tasks.index')->with('success', 'Task created successfully!');
     }
 
     /**

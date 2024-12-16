@@ -15,9 +15,11 @@
         </div>
         <div class="card-body">
             <p><strong>Description:</strong> {{ $task->description }}</p>
-            <p><strong>Status:</strong> {{ $task->is_completed ? 'Completed' : 'Pending' }}</p>
+
         </div>
-        <div class="card-footer text-center">
+        <p><strong>Created At:</strong> {{$task->created_at->diffforHumans()}}</p>
+        <p><strong>Updated At:</strong> {{$task->updated_at->diffforHumans()}}</p>
+        <div>
             <a href="{{ route('tasks.index') }}" class="btn btn-primary">Back to Tasks</a>
         </div>
     </div>
