@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Edit Task</h1>
-<form action="#" method="POST">
+<form action="{{ route('tasks.update', $task->id) }}" method="POST">
     @csrf
     @method('PUT')
 
