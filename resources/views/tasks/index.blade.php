@@ -18,6 +18,11 @@
             <a href="{{route('tasks.show',$task->id)}}">
                 {{$task->title}}
             </a>
+            <form action="{{route('task.destroy', $task->id)}}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type = 'submit' >Delete</button>
+            </form>
         </div>
     @endforeach
 </ul>
