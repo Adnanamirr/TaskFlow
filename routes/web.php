@@ -19,7 +19,7 @@ Route::get('/tasks/archived', [TaskController::class, 'archived'])->name('tasks.
 Route::get('/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
 Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
 
-// Show a single task (show)
+// Show single task
 Route::get('/tasks/{id}',[TaskController::class,'show'])->name('tasks.show');
 
 // Edit an existing task
@@ -28,6 +28,9 @@ Route::put('/tasks/{id}', [TaskController::class, 'update'])->name('tasks.update
 
 // Archive (delete) a task
 Route::delete('/tasks/{id}',[TaskController::class,'archive'])->name('tasks.archive');
+
+// Force-Delete a task
+Route::delete('/tasks/force-delete/{id}', [TaskController::class, 'forceDelete'])->name('tasks.forceDelete');
 
 // Restore an archived task
 Route::get('/tasks/restore/{id}', [TaskController::class, 'restore'])->name('tasks.restore');

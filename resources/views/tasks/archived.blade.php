@@ -18,11 +18,11 @@
             <a href="{{route('tasks.show',['id' => $task->id])}}">
                 {{$task->title}}
             </a>
-{{--            <form action="{{route('tasks.destroy', ['id' => $task->id])}}" method="POST">--}}
-{{--                @csrf--}}
-{{--                @method('DELETE')--}}
-{{--                <button type = 'submit' >Delete</button>--}}
-{{--            </form>--}}
+            <form action="{{route('tasks.forceDelete', ['id' => $task->id])}}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type = 'submit' >Permanently Delete</button>
+            </form>
             <a href="{{route('tasks.restore',['id' => $task->id])}}">Restore</a>
         </div>
     @endforeach
