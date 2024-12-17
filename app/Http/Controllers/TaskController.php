@@ -17,6 +17,12 @@ class TaskController extends Controller
         return view('tasks.index', compact('tasks'));
     }
 
+    public function archived(){
+
+        $tasks = Task::onlyTrashed()->get();
+        return view('tasks.archived', compact('tasks'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */

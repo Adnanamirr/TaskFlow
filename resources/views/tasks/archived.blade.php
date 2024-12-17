@@ -21,13 +21,13 @@
             <form action="{{route('task.destroy', $task->id)}}" method="POST">
                 @csrf
                 @method('DELETE')
-                <button type = 'submit' >Archive</button>
+                <button type = 'submit' >Delete</button>
             </form>
+{{--            <a href="{{route('tasks.restore')}}">Restore</a>--}}
         </div>
     @endforeach
 </ul>
 <a href="/">Go Back</a>
 <a href="{{ route('tasks.create') }}">Create Task</a>
-<a href="{{ route('tasks.archived') }}">Archived Tasks</a>
 </body>
 </html>
