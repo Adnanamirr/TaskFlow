@@ -13,21 +13,21 @@
     </div>
 @endif
 <ul>
-    @foreach ($tasks as $task)
+    @foreach ($archivedTasks as $task)
         <div>
-            <a href="{{route('tasks.show',$task->id)}}">
+            <a href="{{route('tasks.show',['id' => $task->id])}}">
                 {{$task->title}}
             </a>
-            <form action="{{route('task.destroy', $task->id)}}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type = 'submit' >Delete</button>
-            </form>
-{{--            <a href="{{route('tasks.restore')}}">Restore</a>--}}
+{{--            <form action="{{route('tasks.destroy', ['id' => $task->id])}}" method="POST">--}}
+{{--                @csrf--}}
+{{--                @method('DELETE')--}}
+{{--                <button type = 'submit' >Delete</button>--}}
+{{--            </form>--}}
+            <a href="{{route('tasks.restore',['id' => $task->id])}}">Restore</a>
         </div>
     @endforeach
 </ul>
-<a href="/">Go Back</a>
+<a href="{{route('tasks.index')}}">All Tasks</a>
 <a href="{{ route('tasks.create') }}">Create Task</a>
 </body>
 </html>

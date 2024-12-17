@@ -12,21 +12,27 @@
         {{ session('success') }}
     </div>
 @endif
-<ul>
-    @foreach ($tasks as $task)
-        <div>
-            <a href="{{route('tasks.show',$task->id)}}">
-                {{$task->title}}
-            </a>
-            <form action="{{route('task.destroy', $task->id)}}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type = 'submit' >Archive</button>
-            </form>
-        </div>
-    @endforeach
-</ul>
-<a href="/">Go Back</a>
+
+@if(count($tasks) > 0 )
+    <ul>
+        @foreach ($tasks as $task)
+            <div>
+                <a href="{{ route('tasks.show', ['id' => $task->id]) }}">
+                    {{ $task->title }}
+                </a>
+                <form action="{{ route('tasks.archive', ['id' => $task->id]) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit">Archive</button>
+                </form>
+            </div>
+        @endforeach
+    </ul>
+@else
+    <p>No tasks available! Please click <a href="{{ route('tasks.create') }}">Create Task</a> to create a new task</p>
+@endif
+
+<a href="/">Home</a>
 <a href="{{ route('tasks.create') }}">Create Task</a>
 <a href="{{ route('tasks.archived') }}">Archived Tasks</a>
 </body>

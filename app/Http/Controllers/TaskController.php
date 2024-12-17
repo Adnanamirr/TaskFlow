@@ -19,8 +19,8 @@ class TaskController extends Controller
 
     public function archived(){
 
-        $tasks = Task::onlyTrashed()->get();
-        return view('tasks.archived', compact('tasks'));
+        $archivedTasks = Task::onlyTrashed()->get();
+        return view('tasks.archived', compact('archivedTasks'));
     }
 
     /**
@@ -55,29 +55,33 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Task $task)
+    public function show($id)
     {
+        $task = Task::findOrFail($id);
         return view('tasks.show', compact('task'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Task $task)
+    public function edit($id)
     {
+        $task = Task::findOrFail($id);
         return view('tasks.edit', compact('task'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,Task $task)
+    public function update(Request $request,$id)
     {
         $validated = $request->validate([
             'title' => 'required|max:255',
             'description' => 'required',
             'project_id' => 'required|exists:projects,id',
         ]);
+        $task = Task::findOrFail($id);
+
         $task->update([
             'title' => $validated['title'],
             'description' => $validated['description'],
@@ -92,9 +96,23 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Task $task )
+    public function archive($id)
     {
+        $task = Task::findOrFail($id);
+
         $task->delete();
+        return redirect()->route('tasks.index')->with('success', 'Task deleted successfully!');
+    }    public function destroy($id)
+    {
+        $task = Task::findOrFail($id);
+
+        $task->delete();
+        return redirect()->route('tasks.index')->with('success', 'Task deleted successfully!');
+    }
+    public function restore($id )
+    {
+        $task = Task::onlyTrashed()->findOrFail($id);
+        $task->restore();
         return redirect()->route('tasks.index')->with('success', 'Task deleted successfully!');
     }
 }

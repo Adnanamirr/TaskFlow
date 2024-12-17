@@ -21,7 +21,7 @@
         <p><strong>Updated At:</strong> {{$task->updated_at->diffforHumans()}}</p>
         <div>
             <a href="{{ route('tasks.index') }}" class="btn btn-primary">Back to Tasks</a>
-            <a href="{{ route('tasks.edit', $task->id) }}">Edit</a>
+            <a href="{{ route('tasks.edit', ['id' => $task->id]) }}">Edit</a>
         </div>
     </div>
 </div>
