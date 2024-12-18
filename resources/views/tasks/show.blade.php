@@ -9,11 +9,12 @@
 <body>
 <div class="container mt-5">
     <h1 class="text-center">Task Details</h1>
-    <div class="card mx-auto w-50">
-        <div class="card-header">
+
+    <div >
+        <div >
             <h3>{{ $task->title }}</h3>
         </div>
-        <div class="card-body">
+        <div >
             <p><strong>Description:</strong> {{ $task->description }}</p>
 
         </div>

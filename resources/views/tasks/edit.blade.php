@@ -7,6 +7,12 @@
 </head>
 <body>
 <h1>Edit Task</h1>
+
+@if(session('error'))
+    <div style="color: red;">
+        {{ session('error') }}
+    </div>
+@endif
 <form action="{{ route('tasks.update', ['id' => $task->id]) }}" method="POST">
     @csrf
     @method('PUT')

@@ -12,12 +12,17 @@
         {{ session('success') }}
     </div>
 @endif
-<ul>
+<ol>
     @foreach ($archivedTasks as $task)
         <div>
-            <a href="{{route('tasks.show',['id' => $task->id])}}">
-                {{$task->title}}
-            </a>
+
+
+            <li>
+                <a href="{{ route('tasks.show', ['id' => $task->id]) }}">
+                    {{ $task->title }}
+                </a>
+            </li>
+
             <form action="{{route('tasks.forceDelete', ['id' => $task->id])}}" method="POST">
                 @csrf
                 @method('DELETE')
@@ -26,7 +31,7 @@
             <a href="{{route('tasks.restore',['id' => $task->id])}}">Restore</a>
         </div>
     @endforeach
-</ul>
+</ol>
 <a href="{{route('tasks.index')}}">All Tasks</a>
 <a href="{{ route('tasks.create') }}">Create Task</a>
 </body>

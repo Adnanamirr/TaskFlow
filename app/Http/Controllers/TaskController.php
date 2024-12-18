@@ -57,7 +57,7 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        $task = Task::findOrFail($id);
+        $task = Task::withTrashed()->findOrFail($id);
         return view('tasks.show', compact('task'));
     }
 
@@ -67,8 +67,14 @@ class TaskController extends Controller
     public function edit($id)
     {
         $task = Task::findOrFail($id);
+
+        if ($task->trashed()) {
+            return redirect()->route('tasks.index')->with('error', 'Archived tasks cannot be updated.');
+        }
+
         return view('tasks.edit', compact('task'));
     }
+
 
     /**
      * Update the specified resource in storage.
