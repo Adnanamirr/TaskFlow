@@ -34,3 +34,10 @@ Route::delete('/tasks/force-delete/{id}', [TaskController::class, 'forceDelete']
 
 // Restore an archived task
 Route::get('/tasks/restore/{id}', [TaskController::class, 'restore'])->name('tasks.restore');
+
+
+
+
+Route::get('/user/login',function (){
+    return view('user.login');
+})->name('user.login');

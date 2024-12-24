@@ -22,8 +22,11 @@
         <p><strong>Updated At:</strong> {{$task->updated_at->diffforHumans()}}</p>
         <div>
             <a href="{{ route('tasks.index') }}" class="btn btn-primary">Back to Tasks</a>
+            @if(!$task->trashed())
             <a href="{{ route('tasks.edit', ['id' => $task->id]) }}">Edit</a>
+            @endif
         </div>
+
     </div>
 </div>
 </body>
