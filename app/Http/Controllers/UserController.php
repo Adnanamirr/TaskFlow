@@ -19,7 +19,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         return view('user.show', compact('user'));
     }
-    
+
     public function create(){
 
         return view('user.create');
@@ -38,5 +38,13 @@ class UserController extends Controller
             'email' => $validated['email'],
             'password' => Hash::make($validated['password'])
 ]);
+        return redirect()->route('user.index')->with('success', 'User updated successfully!');
+    }
+
+
+    public function edit($id){
+        $user =  User::findOrFail($id);
+        return view('user.edit', compact('user'));
+
     }
 }

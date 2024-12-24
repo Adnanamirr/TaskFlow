@@ -22,6 +22,9 @@
         <p><strong>Updated At:</strong> {{$user->updated_at->diffforHumans()}}</p>
 
     </div>
+    <div>
+        <a href="{{ route('user.edit', ['id' => $user->id]) }}">Edit</a>
+    </div>
 </div>
 </body>
 </html>
