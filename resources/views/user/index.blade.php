@@ -1,11 +1,24 @@
-
-<ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow - Home</title>
+</head>
+<body>
+<h1>Users List</h1>
+<ol>
 @foreach ($users as $user)
     <div>
         <a href="{{ route('user.show', ['id' => $user->id]) }}">
-            {{ $user->name }}
+           <li> {{ $user->name }}</li>
         </a>
 
     </div>
     @endforeach
-    </ul>
+    </ol>
+
+<a href="{{ route('user.create') }}">Sign Up</a>
+
+</body>
+</html>

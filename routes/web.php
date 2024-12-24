@@ -37,7 +37,11 @@ Route::delete('/tasks/force-delete/{id}', [TaskController::class, 'forceDelete']
 Route::get('/tasks/restore/{id}', [TaskController::class, 'restore'])->name('tasks.restore');
 
 
-Route::get('/users/index', [UserController::class,'index'])->name('users.index');
+Route::get('/users/index', [UserController::class,'index'])->name('user.index');
+
+
+Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
+Route::post('/user', [UserController::class, 'store'])->name('user.store');
 
 Route::get('/user/{id}',[UserController::class,'show'])->name('user.show');
 

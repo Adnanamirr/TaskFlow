@@ -9,5 +9,7 @@
 <h1>Welcome to TaskFlow</h1>
 
 <a href="{{ route('tasks.index') }}">Go to Tasks</a>
+<a href="{{ route('user.index') }}">Go to Users</a>
+
 </body>
 </html>
