@@ -20,5 +20,7 @@ class DatabaseSeeder extends Seeder
         Task::factory(20)->create();
 
 
+        User::factory(10)->create();
+
     }
 }
