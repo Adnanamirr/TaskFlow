@@ -39,6 +39,9 @@ Route::get('/tasks/restore/{id}', [TaskController::class, 'restore'])->name('tas
 
 Route::get('/users/index', [UserController::class,'index'])->name('users.index');
 
+Route::get('/user/{id}',[UserController::class,'show'])->name('user.show');
+
+
 Route::get('/user/login',function (){
     return view('user.login');
 })->name('user.login');

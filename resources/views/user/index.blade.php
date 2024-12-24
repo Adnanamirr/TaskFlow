@@ -1,9 +1,11 @@
 
-<ol>
+<ul>
 @foreach ($users as $user)
     <div>
-        <li>{{$user->name}}</li>
+        <a href="{{ route('user.show', ['id' => $user->id]) }}">
+            {{ $user->name }}
+        </a>
 
     </div>
     @endforeach
-</ol>
+    </ul>
