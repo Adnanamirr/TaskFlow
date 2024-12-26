@@ -55,6 +55,10 @@ Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update')
 //Archive User
 Route::delete('/user/{id}',[UserController::class,'archive'])->name('user.archive');
 
+//Archived User list
+Route::get('/user/archived', [UserController::class, 'archived'])->name('user.archived');
+
+
 
 Route::get('/user/login',function (){
     return view('user.login');

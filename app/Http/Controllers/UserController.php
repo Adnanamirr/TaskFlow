@@ -73,5 +73,12 @@ class UserController extends Controller
 
     }
 
+    public function archived($id){
+        $archivedUser = User::onlyTrashed()->get();
+        return view('user.archived', compact('archivedUser'));
+
+
+    }
+
 
 }
