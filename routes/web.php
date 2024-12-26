@@ -36,17 +36,25 @@ Route::delete('/tasks/force-delete/{id}', [TaskController::class, 'forceDelete']
 // Restore an archived task
 Route::get('/tasks/restore/{id}', [TaskController::class, 'restore'])->name('tasks.restore');
 
+////////////////////////////////////////////////////
 
+// Show all Users
 Route::get('/users/index', [UserController::class,'index'])->name('user.index');
 
-
+// sign-up new user
 Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
 Route::post('/user', [UserController::class, 'store'])->name('user.store');
 
+//show single user
 Route::get('/user/{id}',[UserController::class,'show'])->name('user.show');
 
+// edit user details
 Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
 Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update');
+
+//Archive User
+Route::delete('/user/{id}',[UserController::class,'archive'])->name('user.archive');
+
 
 Route::get('/user/login',function (){
     return view('user.login');

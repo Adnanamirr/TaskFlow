@@ -38,7 +38,7 @@ class UserController extends Controller
             'email' => $validated['email'],
             'password' => Hash::make($validated['password'])
 ]);
-        return redirect()->route('user.index')->with('success', 'User updated successfully!');
+        return redirect()->route('user.index')->with('success', 'User Added successfully!');
     }
 
 
@@ -47,4 +47,31 @@ class UserController extends Controller
         return view('user.edit', compact('user'));
 
     }
+
+    public function update(Request $request, $id){
+
+        $validated =  $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email|unique:users,email'. $id,
+            'password' => 'nullable|min:8'
+
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->update([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => $validated['password'] ? Hash::make($validated['password']) : $user->password,
+        ]);
+        return redirect()->route('user.index')->with('success', 'User updated successfully!');
+    }
+
+    public function archive($id){
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect()->route('user.index')->with('success', 'User Archived successfully!');
+
+    }
+
+
 }

@@ -108,7 +108,9 @@ class TaskController extends Controller
 
         $task->delete();
         return redirect()->route('tasks.index')->with('success', 'Task deleted successfully!');
-    }    public function forceDelete($id)
+    }
+
+    public function forceDelete($id)
     {
         $task = Task::withTrashed()->findOrFail($id);
 

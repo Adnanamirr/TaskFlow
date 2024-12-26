@@ -13,6 +13,11 @@
         <a href="{{ route('user.show', ['id' => $user->id]) }}">
            <li> {{ $user->name }}</li>
         </a>
+        <form action="{{ route('user.archive', ['id' => $user->id]) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit">Archive</button>
+        </form>
 
     </div>
     @endforeach
