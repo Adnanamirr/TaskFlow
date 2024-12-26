@@ -13,10 +13,15 @@ class UserController extends Controller
         $users = User::all();
         return view('user.index',compact('users'));
     }
+    public function archived(){
+        $archivedUser = User::onlyTrashed()->get();
+        return view('user.archived', compact('archivedUser'));
 
+
+    }
     public function show($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::withTrashed()->findOrFail($id);
         return view('user.show', compact('user'));
     }
 
@@ -73,12 +78,7 @@ class UserController extends Controller
 
     }
 
-    public function archived($id){
-        $archivedUser = User::onlyTrashed()->get();
-        return view('user.archived', compact('archivedUser'));
 
-
-    }
 
 
 }

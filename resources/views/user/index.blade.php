@@ -24,7 +24,7 @@
     </ol>
 
 <a href="{{ route('user.create') }}">Sign Up</a>
-<a href="{{ route('tasks.archived') }}">Archived Tasks</a>
+<a href="{{ route('user.archived') }}">Archived User</a>
 
 </body>
 </html>

@@ -6,7 +6,7 @@
     <title>TaskFlow</title>
 </head>
 <body>
-<h1>Welcome to TaskFlow</h1>
+<h1>Archived Users</h1>
 @if(session('success'))
 <div style="color: green;">
     {{ session('success') }}
@@ -22,17 +22,10 @@
                 {{ $user->name }}
             </a>
         </li>
-
-<!--        <form action="{{route('user.forceDelete', ['id' => $user->id])}}" method="POST">-->
-<!--            @csrf-->
-<!--            @method('DELETE')-->
-<!--            <button type = 'submit' >Permanently Delete</button>-->
-<!--        </form>-->
-<!--        <a href="{{route('user.restore',['id' => $user->id])}}">Restore</a>-->
-    </div>
+</div>
     @endforeach
 </ol>
-<a href="{{route('tasks.index')}}">All Tasks</a>
-<a href="{{ route('tasks.create') }}">Create Task</a>
+<a href="{{route('user.index')}}">All Users</a>
+<a href="{{ route('user.create') }}">Sign-up</a>
 </body>
 </html>

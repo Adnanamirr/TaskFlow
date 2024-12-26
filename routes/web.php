@@ -41,6 +41,9 @@ Route::get('/tasks/restore/{id}', [TaskController::class, 'restore'])->name('tas
 // Show all Users
 Route::get('/users/index', [UserController::class,'index'])->name('user.index');
 
+//Archived User list
+Route::get('/user/archived', [UserController::class, 'archived'])->name('user.archived');
+
 // sign-up new user
 Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
 Route::post('/user', [UserController::class, 'store'])->name('user.store');
@@ -55,9 +58,9 @@ Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update')
 //Archive User
 Route::delete('/user/{id}',[UserController::class,'archive'])->name('user.archive');
 
-//Archived User list
-Route::get('/user/archived', [UserController::class, 'archived'])->name('user.archived');
+// Force-Delete User
 
+// Restore an archived User
 
 
 Route::get('/user/login',function (){

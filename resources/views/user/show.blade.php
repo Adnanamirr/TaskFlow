@@ -23,6 +23,8 @@
 
     </div>
     <div>
+        <a href="{{ route('user.index') }}" >Back to Users</a>
+
         <a href="{{ route('user.edit', ['id' => $user->id]) }}">Edit</a>
     </div>
 </div>
