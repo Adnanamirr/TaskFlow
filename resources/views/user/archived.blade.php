@@ -12,6 +12,7 @@
     {{ session('success') }}
 </div>
 @endif
+@if(count($archivedUser) > 0)
 <ol>
     @foreach ($archivedUser as $user)
     <div>
@@ -22,10 +23,18 @@
                 {{ $user->name }}
             </a>
         </li>
+        <form action="{{route('user.forceDelete', ['id' => $user->id])}}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type = 'submit' >Permanently Delete</button>
+        </form>
 </div>
     @endforeach
 </ol>
+@else
+    <p>No Users available!</p>
+@endif
 <a href="{{route('user.index')}}">All Users</a>
-<a href="{{ route('user.create') }}">Sign-up</a>
+{{--<a href="{{ route('user.create') }}">Sign-up</a>--}}
 </body>
 </html>

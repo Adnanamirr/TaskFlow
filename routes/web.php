@@ -59,6 +59,7 @@ Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update')
 Route::delete('/user/{id}',[UserController::class,'archive'])->name('user.archive');
 
 // Force-Delete User
+Route::delete('/user/force-delete/{id}', [UserController::class, 'forceDelete'])->name('user.forceDelete');
 
 // Restore an archived User
 

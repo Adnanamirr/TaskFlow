@@ -7,6 +7,11 @@
 </head>
 <body>
 <h1>Welcome to TaskFlow</h1>
+
+<div>
+    <a href="/">Home</a>
+    </div>
+
 @if(session('success'))
     <div style="color: green;">
         {{ session('success') }}
@@ -28,12 +33,13 @@
             </div>
         @endforeach
     </ul>
+
+    <a href="{{ route('tasks.create') }}">Create Task</a>
+    <a href="{{ route('tasks.archived') }}">Archived Tasks</a>
 @else
     <p>No tasks available! Please click <a href="{{ route('tasks.create') }}">Create Task</a> to create a new task</p>
 @endif
 
-<a href="/">Home</a>
-<a href="{{ route('tasks.create') }}">Create Task</a>
-<a href="{{ route('tasks.archived') }}">Archived Tasks</a>
+
 </body>
 </html>

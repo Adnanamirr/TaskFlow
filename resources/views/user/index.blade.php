@@ -7,6 +7,16 @@
 </head>
 <body>
 <h1>Users List</h1>
+<div>
+    <a href="/">Home</a>
+</div>
+
+@if(session('success'))
+    <div style="color: green;">
+        {{ session('success') }}
+    </div>
+@endif
+@if(count($users) > 0)
 <ol>
 @foreach ($users as $user)
     <div>
@@ -22,8 +32,13 @@
     </div>
     @endforeach
     </ol>
-
 <a href="{{ route('user.create') }}">Sign Up</a>
+
+
+@else
+    <p> No Users available! Please click <a href="{{ route('user.create') }}">Sign Up</a> to register new user </p>
+@endif
+
 <a href="{{ route('user.archived') }}">Archived User</a>
 
 </body>

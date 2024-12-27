@@ -12,6 +12,8 @@
         {{ session('success') }}
     </div>
 @endif
+
+@if(count($archivedTasks) > 0 )
 <ol>
     @foreach ($archivedTasks as $task)
         <div>
@@ -32,7 +34,11 @@
         </div>
     @endforeach
 </ol>
+@else
+    <p>No tasks available!</p>
+@endif
+
 <a href="{{route('tasks.index')}}">All Tasks</a>
-<a href="{{ route('tasks.create') }}">Create Task</a>
+{{--<a href="{{ route('tasks.create') }}">Create Task</a>--}}
 </body>
 </html>
