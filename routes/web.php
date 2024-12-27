@@ -62,6 +62,7 @@ Route::delete('/user/{id}',[UserController::class,'archive'])->name('user.archiv
 Route::delete('/user/force-delete/{id}', [UserController::class, 'forceDelete'])->name('user.forceDelete');
 
 // Restore an archived User
+Route::get('/user/restore/{id}', [UserController::class, 'restore'])->name('user.restore');
 
 
 Route::get('/user/login',function (){

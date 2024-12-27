@@ -28,7 +28,9 @@
             @method('DELETE')
             <button type = 'submit' >Permanently Delete</button>
         </form>
-</div>
+        <a href="{{route('user.restore',['id' => $user->id])}}">Restore</a>
+
+    </div>
     @endforeach
 </ol>
 @else

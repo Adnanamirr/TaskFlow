@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -85,6 +83,12 @@ class UserController extends Controller
 
         $user->forceDelete();
         return redirect()->route('user.index')->with('success', 'User deleted successfully!');
+    }
+    public function restore($id )
+    {
+        $user = User::onlyTrashed()->findOrFail($id);
+        $user->restore();
+        return redirect()->route('user.index')->with('success', 'User Restored successfully!');
     }
 
 
