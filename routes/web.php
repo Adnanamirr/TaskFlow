@@ -37,6 +37,12 @@ Route::delete('/tasks/force-delete/{id}', [TaskController::class, 'forceDelete']
 Route::get('/tasks/restore/{id}', [TaskController::class, 'restore'])->name('tasks.restore');
 
 ////////////////////////////////////////////////////
+// Show login form
+Route::get('/user/login', [UserController::class, 'login'])->name('user.login');
+
+// Handle login submission
+Route::post('/user/login', [UserController::class, 'authenticate'])->name('user.login.submit');
+
 
 // Show all Users
 Route::get('/users/index', [UserController::class,'index'])->name('user.index');
@@ -65,6 +71,3 @@ Route::delete('/user/force-delete/{id}', [UserController::class, 'forceDelete'])
 Route::get('/user/restore/{id}', [UserController::class, 'restore'])->name('user.restore');
 
 
-Route::get('/user/login',function (){
-    return view('user.login');
-})->name('user.login');

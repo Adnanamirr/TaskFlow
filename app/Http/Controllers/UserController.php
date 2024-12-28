@@ -91,6 +91,24 @@ class UserController extends Controller
         return redirect()->route('user.index')->with('success', 'User Restored successfully!');
     }
 
+    public function login()
+    {
+        return view('user.login');
+    }
 
+    public function authenticate(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ]);
+
+        if (auth()->attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->route('user.index')->with('success', 'Logged in successfully!');
+        }
+
+        return back()->with('error', 'Invalid credentials');
+    }
 
 }

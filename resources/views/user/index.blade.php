@@ -9,6 +9,8 @@
 <h1>Users List</h1>
 <div>
     <a href="/">Home</a>
+    <a href="{{ route('user.login') }}">Login</a>
+
 </div>
 
 @if(session('success'))
