@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -89,7 +90,7 @@ class UserController extends Controller
     {
         $user = User::onlyTrashed()->findOrFail($id);
         $user->restore();
-        return redirect()->route('user.index')->with('success', 'User Restored successfully!');
+        return redirect()->route('home')->with('success', 'Logged out successfully!');
     }
 
     public function login()
@@ -110,6 +111,14 @@ class UserController extends Controller
         }
 
         return back()->with('error', 'Invalid credentials');
+    }
+
+    public function logout(Request $request){
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/user.index')->with('success', 'You have been logged out successfully!');
     }
 
 

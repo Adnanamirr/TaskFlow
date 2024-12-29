@@ -5,10 +5,10 @@ use App\Http\Controllers\UserController;
 use App\Models\Task;
 use Illuminate\Support\Facades\Route;
 
-// Home route
 Route::get('/', function () {
     return view('home');
-});
+})->name('home');
+
 
 Route::middleware(['auth'])->group(function () {
 
@@ -73,4 +73,4 @@ Route::delete('/user/force-delete/{id}', [UserController::class, 'forceDelete'])
 // Restore an archived User
 Route::get('/user/restore/{id}', [UserController::class, 'restore'])->name('user.restore');
 
-
+Route::post('logout', [UserController::class, 'logout'])->name('user.logout');

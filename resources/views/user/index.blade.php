@@ -8,9 +8,15 @@
 <body>
 <h1>Users List</h1>
 <div>
-    <a href="/">Home</a>
-    <a href="{{ route('login') }}">Login</a>
-
+    <a href="{{ route('home') }}">Home</a>
+    @auth
+    <form action="{{ route('user.logout') }}" method="POST">
+        @csrf
+        <button type="submit" class="btn btn-danger">Logout</button>
+    </form>
+@else
+        <a href="{{ route('login') }}">Login</a>
+    @endauth
 </div>
 
 @if($currentUser)
