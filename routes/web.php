@@ -10,6 +10,8 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::middleware(['auth'])->group(function () {
+
 // Show all tasks (index)
 Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
 
@@ -36,9 +38,10 @@ Route::delete('/tasks/force-delete/{id}', [TaskController::class, 'forceDelete']
 // Restore an archived task
 Route::get('/tasks/restore/{id}', [TaskController::class, 'restore'])->name('tasks.restore');
 
+});
 ////////////////////////////////////////////////////
 // Show login form
-Route::get('/user/login', [UserController::class, 'login'])->name('user.login');
+Route::get('/user/login', [UserController::class, 'login'])->name('login');
 
 // Handle login submission
 Route::post('/user/login', [UserController::class, 'authenticate'])->name('user.login.submit');

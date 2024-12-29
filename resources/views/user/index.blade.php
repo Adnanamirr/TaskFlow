@@ -9,9 +9,13 @@
 <h1>Users List</h1>
 <div>
     <a href="/">Home</a>
-    <a href="{{ route('user.login') }}">Login</a>
+    <a href="{{ route('login') }}">Login</a>
 
 </div>
+
+@if($currentUser)
+    <h1>Hello, {{ $currentUser->name }}</h1>
+@endif
 
 @if(session('success'))
     <div style="color: green;">

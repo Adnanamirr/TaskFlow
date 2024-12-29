@@ -10,7 +10,8 @@ class UserController extends Controller
     public function index(){
 
         $users = User::all();
-        return view('user.index',compact('users'));
+        $currentUser = auth()->user();
+        return view('user.index',compact('users','currentUser'));
     }
     public function archived(){
         $archivedUser = User::onlyTrashed()->get();
@@ -110,5 +111,7 @@ class UserController extends Controller
 
         return back()->with('error', 'Invalid credentials');
     }
+
+
 
 }
