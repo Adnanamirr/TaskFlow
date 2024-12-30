@@ -41,7 +41,7 @@ Route::get('/tasks/restore/{id}', [TaskController::class, 'restore'])->name('tas
 });
 ////////////////////////////////////////////////////
 // Show login form
-Route::get('/user/login', [UserController::class, 'login'])->name('login');
+Route::get('/user/login', [UserController::class, 'login'])->name('user.login');
 
 // Handle login submission
 Route::post('/user/login', [UserController::class, 'authenticate'])->name('user.login.submit');
@@ -54,7 +54,7 @@ Route::get('/users/index', [UserController::class,'index'])->name('user.index');
 Route::get('/user/archived', [UserController::class, 'archived'])->name('user.archived');
 
 // sign-up new user
-Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
+Route::get('/user/register', [UserController::class, 'register'])->name('user.register');
 Route::post('/user', [UserController::class, 'store'])->name('user.store');
 
 //show single user

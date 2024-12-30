@@ -6,7 +6,7 @@
 <body>
 <h1>Login</h1>
 <div>
-    <a href="{{ route('user.create') }}">Sign Up</a>
+    <a href="{{ route('user.register') }}">Sign Up</a>
 
 </div>
 @if (session('error'))

@@ -37,6 +37,6 @@
     <p>No Users available!</p>
 @endif
 <a href="{{route('user.index')}}">All Users</a>
-{{--<a href="{{ route('user.create') }}">Sign-up</a>--}}
+{{--<a href="{{ route('user.register') }}">Sign-up</a>--}}
 </body>
 </html>

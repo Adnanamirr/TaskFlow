@@ -15,7 +15,7 @@
         <button type="submit" class="btn btn-danger">Logout</button>
     </form>
 @else
-        <a href="{{ route('login') }}">Login</a>
+        <a href="{{ route('user.login') }}">Login</a>
     @endauth
 </div>
 
@@ -44,11 +44,11 @@
     </div>
     @endforeach
     </ol>
-<a href="{{ route('user.create') }}">Sign Up</a>
+<a href="{{ route('user.register') }}">Sign Up</a>
 
 
 @else
-    <p> No Users available! Please click <a href="{{ route('user.create') }}">Sign Up</a> to register new user </p>
+    <p> No Users available! Please click <a href="{{ route('user.register') }}">Sign Up</a> to register new user </p>
 @endif
 
 <a href="{{ route('user.archived') }}">Archived User</a>
