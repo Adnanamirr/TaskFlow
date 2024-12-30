@@ -9,7 +9,6 @@
 <h1>Edit User</h1>
 
 
-
 <form action="{{ route('user.update', ['id' => $user->id]) }}" method="POST">
     @csrf
     @method('PUT')
@@ -20,11 +19,9 @@
     <label for="email">Email:</label>
     <input type="email" name="email" id="email" value="{{ old('email', $user->email) }}" required>
 
-    <label for="password">Password:</label>
-    <input type="password" name="password" id="password">
-
     <button type="submit">Update User</button>
 </form>
+
 
 <a href="{{ route('user.index') }}">Back to User List</a>
 </body>
