@@ -9,6 +9,19 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+// Show login form
+Route::get('/user/login', [UserController::class, 'login'])->name('login');
+
+// Handle login submission
+Route::post('/user/login', [UserController::class, 'authenticate'])->name('user.login.submit');
+
+
+// sign-up new user
+Route::get('/user/register', [UserController::class, 'register'])->name('user.register');
+Route::post('/user', [UserController::class, 'store'])->name('user.store');
+
+
+
 
 Route::middleware(['auth'])->group(function () {
 
@@ -21,9 +34,6 @@ Route::get('/tasks/archived', [TaskController::class, 'archived'])->name('tasks.
 // Create a new task
 Route::get('/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
 Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
-
-// Show single task
-Route::get('/tasks/{id}',[TaskController::class,'show'])->name('tasks.show');
 
 // Edit task
 Route::get('/tasks/{id}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
@@ -38,13 +48,11 @@ Route::delete('/tasks/force-delete/{id}', [TaskController::class, 'forceDelete']
 // Restore an archived task
 Route::get('/tasks/restore/{id}', [TaskController::class, 'restore'])->name('tasks.restore');
 
-});
-////////////////////////////////////////////////////
-// Show login form
-Route::get('/user/login', [UserController::class, 'login'])->name('user.login');
+// Show single task
+Route::get('/tasks/{id}',[TaskController::class,'show'])->name('tasks.show');
 
-// Handle login submission
-Route::post('/user/login', [UserController::class, 'authenticate'])->name('user.login.submit');
+
+////////////////////////////////////////////////////
 
 
 // Show all Users
@@ -52,10 +60,6 @@ Route::get('/users/index', [UserController::class,'index'])->name('user.index');
 
 //Archived User list
 Route::get('/user/archived', [UserController::class, 'archived'])->name('user.archived');
-
-// sign-up new user
-Route::get('/user/register', [UserController::class, 'register'])->name('user.register');
-Route::post('/user', [UserController::class, 'store'])->name('user.store');
 
 //show single user
 Route::get('/user/{id}',[UserController::class,'show'])->name('user.show');
@@ -73,4 +77,10 @@ Route::delete('/user/force-delete/{id}', [UserController::class, 'forceDelete'])
 // Restore an archived User
 Route::get('/user/restore/{id}', [UserController::class, 'restore'])->name('user.restore');
 
+//Logout User
 Route::post('logout', [UserController::class, 'logout'])->name('user.logout');
+
+});
+
+
+

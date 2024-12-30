@@ -18,7 +18,7 @@
         </form>
     @else
         <p>Please Login Or Sign-up</p>
-        <a href="{{ route('user.login') }}">Login</a>
+        <a href="{{ route('login') }}">Login</a>
         <a href="{{ route('user.register') }}">Sign Up</a>
     @endauth
 </nav>
