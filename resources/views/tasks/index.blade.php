@@ -9,7 +9,7 @@
 <h1>Welcome to TaskFlow</h1>
 
 <div>
-    <a href="/">Home</a>
+    <a href="{{route('home')}}">Home</a>
     </div>
 
 @if(session('success'))
