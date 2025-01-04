@@ -1,27 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TaskFlow - Home</title>
-</head>
-<body>
-<h1>Welcome to TaskFlow</h1>
+@extends('layout.app')
 
-<nav>
-    @auth
-        <a href="{{ route('tasks.index') }}">Tasks</a>
-        <a href="{{ route('user.index') }}">Users</a>
-        <form action="{{ route('user.logout') }}" method="POST" style="display:inline;">
-            @csrf
-            <button type="submit" class="btn btn-danger">Logout</button>
-        </form>
-    @else
-        <p>Please Login Or Sign-up</p>
-        <a href="{{ route('login') }}">Login</a>
-        <a href="{{ route('user.register') }}">Sign Up</a>
-    @endauth
-</nav>
+@section('title', 'TaskFlow - Home')
 
-</body>
-</html>
+@section('content')
+
+    @include('components.success')
+
+    <nav>
+        @auth
+            <a href="{{ route('tasks.index') }}" class="btn">Tasks</a>
+            <a href="{{ route('user.index') }}" class="btn">Users</a>
+            <form action="{{ route('user.logout') }}" method="POST" style="display:inline;">
+                @csrf
+                <button type="submit" class="btn btn-danger">Logout</button>
+            </form>
+        @else
+            <p>Please Login or Sign Up</p>
+            <a href="{{ route('login') }}" class="btn">Login</a>
+            <a href="{{ route('user.register') }}" class="btn">Sign Up</a>
+        @endauth
+    </nav>
+@endsection

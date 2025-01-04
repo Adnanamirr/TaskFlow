@@ -1,44 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TaskFlow - Home</title>
-</head>
-<body>
-<h1>Welcome to TaskFlow</h1>
-@if(session('success'))
-    <div style="color: green;">
-        {{ session('success') }}
-    </div>
-@endif
+@extends('layout.app')
 
-@if(count($archivedTasks) > 0 )
-<ol>
-    @foreach ($archivedTasks as $task)
-        <div>
+@section('title', 'TaskFlow - Archived Tasks')
 
+@section('content')
 
-            <li>
-                <a href="{{ route('tasks.show', ['id' => $task->id]) }}">
-                    {{ $task->title }}
-                </a>
-            </li>
+    @include('components.success')
+    @include('components.error')
 
-            <form action="{{route('tasks.forceDelete', ['id' => $task->id])}}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type = 'submit' >Permanently Delete</button>
-            </form>
-            <a href="{{route('tasks.restore',['id' => $task->id])}}">Restore</a>
-        </div>
-    @endforeach
-</ol>
-@else
-    <p>No tasks available!</p>
-@endif
+    @if(count($archivedTasks) > 0)
+        <ol>
+            @foreach ($archivedTasks as $task)
+                <div>
+                    <li>
+                        <a href="{{ route('tasks.show', ['id' => $task->id]) }}">
+                            {{ $task->title }}
+                        </a>
+                    </li>
 
-<a href="{{route('tasks.index')}}">All Tasks</a>
-{{--<a href="{{ route('tasks.create') }}">Create Task</a>--}}
-</body>
-</html>
+                    <form action="{{ route('tasks.forceDelete', ['id' => $task->id]) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn">Permanently Delete</button>
+                    </form>
+
+                    <a href="{{ route('tasks.restore', ['id' => $task->id]) }}" class="btn">Restore</a>
+                </div>
+            @endforeach
+        </ol>
+    @else
+        <p>No tasks available!</p>
+    @endif
+
+    <a href="{{ route('tasks.index') }}" class="btn">All Tasks</a>
+@endsection

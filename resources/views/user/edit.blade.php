@@ -1,28 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit User</title>
-</head>
-<body>
-<h1>Edit User</h1>
+@extends('layout.app')
 
+@section('title', 'TaskFlow - Edit User')
 
-<form action="{{ route('user.update', ['id' => $user->id]) }}" method="POST">
-    @csrf
-    @method('PUT')
+@section('content')
+    <h1>Edit User</h1>
 
-    <label for="name">User Name:</label>
-    <input type="text" name="name" id="name" value="{{ old('name', $user->name) }}" required>
+    @include('components.success')
+    @include('components.error')
 
-    <label for="email">Email:</label>
-    <input type="email" name="email" id="email" value="{{ old('email', $user->email) }}" required>
+    <form action="{{ route('user.update', ['id' => $user->id]) }}" method="POST">
+        @csrf
+        @method('PUT')
 
-    <button type="submit">Update User</button>
-</form>
+        <div>
+            <label for="name">User Name:</label>
+            <input type="text" name="name" id="name" value="{{ old('name', $user->name) }}" required>
+        </div>
 
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" value="{{ old('email', $user->email) }}" required>
+        </div>
 
-<a href="{{ route('user.index') }}">Back to User List</a>
-</body>
-</html>
+        <div>
+            <button type="submit" class="btn" >Update User</button>
+        </div>
+    </form>
+
+    <a href="{{ route('user.index') }}" class="btn">Back to User List</a>
+@endsection

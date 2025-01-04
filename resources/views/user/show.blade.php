@@ -1,32 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Details</title>
+@extends('layout.app')
 
-</head>
-<body>
-<div class="container mt-5">
-    <h1 class="text-center">User Details</h1>
+@section('title', 'TaskFlow - User Details')
 
-    <div >
-        <div >
-            <h3>{{ $user->name }}</h3>
-        </div>
-        <div >
+@section('content')
+    <div class="container mt-5">
+
+        <div>
+            <h1>{{ $user->name }}</h1>
             <p><strong>Email:</strong> {{ $user->email }}</p>
-
+            <p><strong>Created At:</strong> {{ $user->created_at->diffForHumans() }}</p>
+            <p><strong>Updated At:</strong> {{ $user->updated_at->diffForHumans() }}</p>
         </div>
-        <p><strong>Created At:</strong> {{$user->created_at->diffforHumans()}}</p>
-        <p><strong>Updated At:</strong> {{$user->updated_at->diffforHumans()}}</p>
 
+        <div>
+            <a href="{{ route('user.index') }}" class="btn">Back to Users</a>
+            <a href="{{ route('user.edit', ['id' => $user->id]) }}" class="btn">Edit</a>
+        </div>
     </div>
-    <div>
-        <a href="{{ route('user.index') }}" >Back to Users</a>
-
-        <a href="{{ route('user.edit', ['id' => $user->id]) }}">Edit</a>
-    </div>
-</div>
-</body>
-</html>
+@endsection

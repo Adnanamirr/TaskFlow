@@ -44,7 +44,7 @@ class UserController extends Controller
             'email' => $validated['email'],
             'password' => Hash::make($validated['password'])
 ]);
-        return redirect()->route('user.index')->with('success', 'User Added successfully!');
+        return redirect()->route('home')->with('success', 'User Added successfully!');
     }
 
 
@@ -71,6 +71,10 @@ class UserController extends Controller
 
     public function archive($id){
         $user = User::findOrFail($id);
+        if (auth()->id() === $user->id) {
+            return redirect()->back()->with('error', 'You cannot archive yourself.');
+        }
+
         $user->delete();
         return redirect()->route('user.index')->with('success', 'User Archived successfully!');
 
@@ -87,7 +91,7 @@ class UserController extends Controller
     {
         $user = User::onlyTrashed()->findOrFail($id);
         $user->restore();
-        return redirect()->route('home')->with('success', 'Logged out successfully!');
+        return redirect()->route('user.index')->with('success', 'Logged out successfully!');
     }
 
     public function login()
@@ -104,7 +108,7 @@ class UserController extends Controller
 
         if (auth()->attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('user.index')->with('success', 'Logged in successfully!');
+            return redirect()->route('home')->with('success', 'Logged in successfully!');
         }
 
         return back()->with('error', 'Invalid credentials');

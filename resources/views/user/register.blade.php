@@ -1,24 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+@extends('layout.app')
 
-</head>
-<body>
-<h1>Register a New User</h1>
-<form action="{{route('user.store')}}" method="POST">
-    @csrf
-    <label for="name">Name:</label>
-    <input type="text" name="name" id="name" required>
+@section('title', 'TaskFlow - Register a New User')
 
-    <label for="email">Email:</label>
-    <textarea name="email" id="email" required></textarea>
+@section('content')
 
-    <label for="password">Password:</label>
-    <input type="password" name="password" id="password" required>
 
-    <button type="submit">Sign Up</button>
-</form>
-</body>
-</html>
+    @include('components.success')
+    @include('components.error')
+
+    <form action="{{ route('user.store') }}"  method="POST">
+        @csrf
+
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name" value="{{ old('name') }}" required>
+        </div>
+
+        <div>
+            <label for="email">Email:</label>
+            <input type="text" name="email" id="email" value="{{ old('email') }}" required>
+        </div>
+
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" required>
+        </div>
+
+        <div>
+            <button type="submit" class="btn">Sign Up</button>
+        </div>
+    </form>
+
+    <p>Already have an account? <a href="{{ route('login') }}" class="btn">Login here</a></p>
+@endsection

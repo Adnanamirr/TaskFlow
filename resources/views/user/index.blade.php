@@ -1,33 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TaskFlow - Home</title>
-</head>
-<body>
+
+
+@extends('layout.app')
+@section('title', 'TaskFlow - Users' )
+
+@section('content')
 <h1>Users List</h1>
+@include('components.success')
+@include('components.error')
+
+
 <div>
-    <a href="{{ route('home') }}">Home</a>
-    @auth
+    <nav>
+    <a href="{{ route('home') }}" class="btn">Home</a>
+@auth
     <form action="{{ route('user.logout') }}" method="POST">
         @csrf
         <button type="submit" class="btn btn-danger">Logout</button>
     </form>
 @else
-        <a href="{{ route('login') }}">Login</a>
-    @endauth
+        <a href="{{ route('login') }}" class="btn">Login</a>
+@endauth
+    </nav>
 </div>
 
 @if($currentUser)
     <h1>Hello, {{ $currentUser->name }}</h1>
 @endif
 
-@if(session('success'))
-    <div style="color: green;">
-        {{ session('success') }}
-    </div>
-@endif
+
 @if(count($users) > 0)
 <ol>
 @foreach ($users as $user)
@@ -38,20 +38,20 @@
         <form action="{{ route('user.archive', ['id' => $user->id]) }}" method="POST">
             @csrf
             @method('DELETE')
-            <button type="submit">Archive</button>
+            <button type="submit" class="btn">Archive</button>
         </form>
 
     </div>
     @endforeach
     </ol>
-<a href="{{ route('user.register') }}">Sign Up</a>
+<a href="{{ route('user.register') }}" class="btn">Sign Up</a>
 
 
 @else
-    <p> No Users available! Please click <a href="{{ route('user.register') }}">Sign Up</a> to register new user </p>
+    <p> No Users available! Please click <a href="{{ route('user.register') }}" class="btn">Sign Up</a> to register new user </p>
 @endif
 
-<a href="{{ route('user.archived') }}">Archived User</a>
+<a href="{{ route('user.archived') }}" class="btn">Archived User</a>
 
-</body>
-</html>
+@endsection
+
