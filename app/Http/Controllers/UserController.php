@@ -91,7 +91,7 @@ class UserController extends Controller
     {
         $user = User::onlyTrashed()->findOrFail($id);
         $user->restore();
-        return redirect()->route('user.index')->with('success', 'Logged out successfully!');
+        return redirect()->route('user.index')->with('success', 'User Restored successfully!');
     }
 
     public function login()
