@@ -96,6 +96,9 @@ class UserController extends Controller
 
     public function login()
     {
+        if (auth()->check()) {
+            return redirect()->route('home')->with('info', 'You are already logged in!');
+        }
         return view('user.login');
     }
 
