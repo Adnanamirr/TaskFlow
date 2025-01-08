@@ -20,14 +20,14 @@
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="/" class="{{ request()->is('/') ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        <a href="/" class="{{ Route::currentRouteName() === '/' ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                             Home
                         </a>
                         @auth
-                            <a href="{{ route('user.index') }}" class="{{ request()->is('user.index') ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            <a href="{{ route('user.index') }}" class="{{Route::currentRouteName() === 'user.index' ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                                 Users
                             </a>
-                            <a href="{{ route('tasks.index') }}" class="{{ request()->is('tasks.index') ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            <a href="{{ route('tasks.index') }}" class="{{ Route::currentRouteName() === 'tasks.index' ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                                 Tasks
                             </a>
                         @endauth
@@ -59,7 +59,50 @@
         </div>
     </div>
 </nav>
-<div class="container mt-5 max-w-4xl mx-auto p-4 bg-gray-100 rounded shadow">
+
+
+
+
+<div class="flex h-screen">
+    <aside class="bg-gray-700 text-white w-64 p-4 space-y-6">
+        <nav class="space-y-4">
+            <a href="/" class="block hover:bg-gray-600 px-3 py-2 rounded-md">Dashboard</a>
+
+            @auth
+
+                <a href="{{ route('user.index') }}"  class="{{ Route::currentRouteName() === 'user.index' ? 'bg-gray-900 text-white' : 'text-gray-300' }}
+                      hover:bg-gray-600 hover:text-white block px-4 py-2 rounded-md">Users</a>
+
+                <a href="{{ route('user.archived') }}" class="{{ Route::currentRouteName() === 'user.archived' ? 'bg-gray-900 text-white' : 'text-gray-300' }}
+                      hover:bg-gray-600 hover:text-white block px-4 py-2 rounded-md">Archived Users</a>
+                <a href="{{ route('user.register') }}"
+                   class="{{ Route::currentRouteName() === 'user.register' ? 'bg-gray-900 text-white' : 'text-gray-300' }}
+                      hover:bg-gray-600 hover:text-white block px-4 py-2 rounded-md">
+                    New User
+                </a>
+            @endauth
+
+            @guest
+                <a href="{{ route('user.register') }}"
+                   class="{{ Route::currentRouteName() === 'user.register' ? 'bg-gray-900 text-white' : 'text-gray-300' }}
+                      hover:bg-gray-600 hover:text-white block px-4 py-2 rounded-md">
+                    Sign Up
+                </a>
+
+                <a href="{{ route('login') }}"
+                   class="{{ Route::currentRouteName() === 'login' ? 'bg-gray-900 text-white' : 'text-gray-300' }}
+                      hover:bg-gray-600 hover:text-white block px-4 py-2 rounded-md">
+                    Log In
+                </a>
+            @endguest
+        </nav>
+    </aside>
+
+
+    <main class="flex-1 p-6 bg-gray-100 overflow-y-auto">
+
+
+<div class="container mt-10 max-w-4xl mx-auto p-4 bg-gray-100 rounded shadow">
     <div class="mb-6">
         <h1 class="text-2xl font-bold text-gray-800">{{ $user->name }}</h1>
         <p class="text-gray-600 mt-2"><strong>Email:</strong> {{ $user->email }}</p>
@@ -76,8 +119,8 @@
         </a>
     </div>
 </div>
-
-
+    </main>
+</div>
 </body>
 </html>
 

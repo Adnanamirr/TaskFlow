@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     public function index(){
 
-        $users = User::all();
+        $users = User::paginate(10);
         $currentUser = auth()->user();
         return view('user.index',compact('users','currentUser'));
     }
@@ -108,7 +108,7 @@ class UserController extends Controller
 
         if (auth()->attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('home')->with('success', 'Logged in successfully!');
+            return redirect()->route('user.index')->with('success', 'Logged in successfully!');
         }
 
         return back()->with('error', 'Invalid credentials');

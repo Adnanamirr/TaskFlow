@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>Demo</title>
+    <title>TaskFlow</title>
     <script src="https://cdn.tailwindcss.com"></script>
 
 </head>
@@ -20,14 +20,14 @@
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="/" class="{{ request()->is('/') ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        <a href="/" class="{{ Route::currentRouteName() === 'home' ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                             Home
                         </a>
                         @auth
-                            <a href="{{ route('user.index') }}" class="{{ request()->is('user/index') ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            <a href="{{ route('user.index') }}" class="{{Route::currentRouteName() === 'user.index' ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                                 Users
                             </a>
-                            <a href="{{ route('tasks.index') }}" class="{{ request()->is('tasks/index') ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            <a href="{{ route('tasks.index') }}" class="{{ Route::currentRouteName() === 'tasks.index' ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                                 Tasks
                             </a>
                         @endauth
@@ -59,11 +59,148 @@
             </div>
         </div>
     </nav>
-    <div class="flex justify-center mt-6">
+
+
+    <div class="flex h-screen">
+        <aside class="bg-gray-700 text-white w-64 p-4 space-y-6">
+            <nav class="space-y-4">
+                <a href="/" class="{{ Route::currentRouteName() === 'home' ? 'bg-gray-900 text-white' : 'text-gray-300' }}
+                      hover:bg-gray-600 hover:text-white block px-4 py-2 rounded-md">Dashboard</a>
+
+                @auth
+                    <a href="{{ route('tasks.index') }}"
+                       class="{{ Route::currentRouteName() === 'tasks.index' ? 'bg-gray-900 text-white' : 'text-gray-300' }}
+                      hover:bg-gray-600 hover:text-white block px-4 py-2 rounded-md">
+                        Tasks
+                    </a>
+
+                    <a href="{{ route('tasks.archived') }}" class="{{ Route::currentRouteName() === 'tasks.archived' ? 'bg-gray-900 text-white' : 'text-gray-300' }}
+                      hover:bg-gray-600 hover:text-white block px-4 py-2 rounded-md">Archived Tasks</a>
+                    <a href="{{ route('tasks.create') }}"
+                       class="{{ Route::currentRouteName() === 'tasks.create' ? 'bg-gray-900 text-white' : 'text-gray-300' }}
+                      hover:bg-gray-600 hover:text-white block px-4 py-2 rounded-md">
+                        New Task
+                    </a>
+                    <a href="{{ route('user.index') }}"  class="{{ Route::currentRouteName() === 'user.index' ? 'bg-gray-900 text-white' : 'text-gray-300' }}
+                      hover:bg-gray-600 hover:text-white block px-4 py-2 rounded-md">Users</a>
+
+                    <a href="{{ route('user.archived') }}" class="{{ Route::currentRouteName() === 'user.archived' ? 'bg-gray-900 text-white' : 'text-gray-300' }}
+                      hover:bg-gray-600 hover:text-white block px-4 py-2 rounded-md">Archived Users</a>
+                    <a href="{{ route('user.register') }}"
+                       class="{{ Route::currentRouteName() === 'user.register' ? 'bg-gray-900 text-white' : 'text-gray-300' }}
+                      hover:bg-gray-600 hover:text-white block px-4 py-2 rounded-md">
+                        New User
+                    </a>
+                @endauth
+
+                @guest
+                    <a href="{{ route('user.register') }}"
+                       class="{{ Route::currentRouteName() === 'user.register' ? 'bg-gray-900 text-white' : 'text-gray-300' }}
+                      hover:bg-gray-600 hover:text-white block px-4 py-2 rounded-md">
+                        Sign Up
+                    </a>
+
+                    <a href="{{ route('login') }}"
+                       class="{{ Route::currentRouteName() === 'login' ? 'bg-gray-900 text-white' : 'text-gray-300' }}
+                      hover:bg-gray-600 hover:text-white block px-4 py-2 rounded-md">
+                        Log In
+                    </a>
+                @endguest
+            </nav>
+        </aside>
+ <main class="flex-1 p-6 bg-gray-100 overflow-y-auto">
+        <div class="flex justify-center mt-6">
         <div class="">
             @include('components.success')
         </div>
     </div>
 
+     <div class="flex flex-col justify-center px-6 py-12 lg:px-8">
+
+             @auth
+
+             <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+                 <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Register New User</h2>
+             </div>
+
+             <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+                 <form action="{{ route('user.store') }}"  method="POST">
+                     @csrf
+
+                     <div>
+                         <label for="name" class="block text-sm/6 font-medium text-gray-900">Name:</label>
+                         <div class="mt-2">
+                             <input type="text" name="name" id="name" value="{{ old('name') }}" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                         </div>
+                     </div>
+
+                     <div>
+                         <label for="email" class="block text-sm/6 font-medium text-gray-900">Email:</label>
+                         <div class="mt-2">
+                             <input type="text" name="email" id="email" value="{{ old('email') }}" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                         </div>
+
+                     </div>
+
+                     <div>
+                         <label for="password" class="block text-sm/6 font-medium text-gray-900">Password:</label>
+                         <div class="mt-2 mb-4">
+                             <input type="password" name="password" id="password" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                         </div>
+
+                     </div>
+
+                     <div>
+                         <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign Up</button>
+                     </div>
+                 </form>
+                 <p class="mt-10 text-center text-sm/6 text-gray-500">
+                     Already have an account?
+                     <a href="{{ route('login') }}" class="font-semibold text-indigo-600 hover:text-indigo-500">Login</a>
+                 </p>
+             </div>
+             @endauth
+
+             @guest
+
+                         <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+                             <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Sign in to your account</h2>
+                         </div>
+
+                         <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+                 <form class="space-y-6" action="{{ route('user.login.submit') }}" method="POST">
+                     @csrf
+                     <div>
+                         <label for="email" class="block text-sm/6 font-medium text-gray-900">Email address</label>
+                         <div class="mt-2">
+                             <input type="email" name="email" id="email" autocomplete="email" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                         </div>
+                     </div>
+
+                     <div>
+                         <div class="flex items-center justify-between">
+                             <label for="password" class="block text-sm/6 font-medium text-gray-900">Password</label>
+
+                         </div>
+                         <div class="mt-2">
+                             <input type="password" name="password" id="password" autocomplete="current-password" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                         </div>
+                     </div>
+
+                     <div>
+                         <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
+                     </div>
+                 </form>
+
+                 <p class="mt-10 text-center text-sm/6 text-gray-500">
+                     Not a member?
+                     <a href="{{ route('user.register') }}" class="font-semibold text-indigo-600 hover:text-indigo-500">Sign Up</a>
+                 </p>
+                         </div>
+             @endguest
+
+     </div>
+ </main>
+    </div>
 </body>
 </html>

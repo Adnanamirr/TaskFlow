@@ -20,14 +20,14 @@
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="/" class="{{ request()->is('/') ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        <a href="/" class="{{ Route::currentRouteName() === '/' ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                             Home
                         </a>
                         @auth
-                            <a href="{{ request()->is('user.index') }}" class="{{ request()->is('user.index') ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            <a href="{{ route('user.index') }}" class="{{Route::currentRouteName() === 'user.index' ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                                 Users
                             </a>
-                            <a href="{{ route('tasks.index') }}" class="{{ request()->is('tasks.index') ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            <a href="{{ route('tasks.index') }}" class="{{ Route::currentRouteName() === 'tasks.index' ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                                 Tasks
                             </a>
                         @endauth
@@ -60,11 +60,53 @@
     </div>
 </nav>
 
-@include('components.success')
-    @include('components.error')
 
-<div class="min-h-screen flex items-center justify-center bg-gray-100">
-    <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
+<div class="flex h-screen">
+    <aside class="bg-gray-700 text-white w-64 p-4 space-y-6">
+        <nav class="space-y-4">
+            <a href="/" class="block hover:bg-gray-600 px-3 py-2 rounded-md">Dashboard</a>
+
+            @auth
+
+                <a href="{{ route('user.index') }}"  class="{{ Route::currentRouteName() === 'user.index' ? 'bg-gray-900 text-white' : 'text-gray-300' }}
+                      hover:bg-gray-600 hover:text-white block px-4 py-2 rounded-md">Users</a>
+
+                <a href="{{ route('user.archived') }}" class="{{ Route::currentRouteName() === 'user.archived' ? 'bg-gray-900 text-white' : 'text-gray-300' }}
+                      hover:bg-gray-600 hover:text-white block px-4 py-2 rounded-md">Archived Users</a>
+                <a href="{{ route('user.register') }}"
+                   class="{{ Route::currentRouteName() === 'user.register' ? 'bg-gray-900 text-white' : 'text-gray-300' }}
+                      hover:bg-gray-600 hover:text-white block px-4 py-2 rounded-md">
+                    New User
+                </a>
+            @endauth
+
+            @guest
+                <a href="{{ route('user.register') }}"
+                   class="{{ Route::currentRouteName() === 'user.register' ? 'bg-gray-900 text-white' : 'text-gray-300' }}
+                      hover:bg-gray-600 hover:text-white block px-4 py-2 rounded-md">
+                    Sign Up
+                </a>
+
+                <a href="{{ route('login') }}"
+                   class="{{ Route::currentRouteName() === 'login' ? 'bg-gray-900 text-white' : 'text-gray-300' }}
+                      hover:bg-gray-600 hover:text-white block px-4 py-2 rounded-md">
+                    Log In
+                </a>
+            @endguest
+        </nav>
+    </aside>
+
+<main class="flex-1 p-6 bg-gray-100 overflow-y-auto">
+    <div class="flex justify-center mt-6">
+        <div>
+            @include('components.success')
+            @include('components.error')
+        </div>
+    </div>
+
+    <div class="container mx-auto mt-8">
+        <div class="flex flex-col justify-center px-6 py-12 lg:px-8">
+            <div class="sm:mx-auto sm:w-full sm:max-w-sm">
         <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Edit User</h2>
 
         <form class="space-y-6" action="{{ route('user.update', ['id' => $user->id]) }}" method="POST">
@@ -103,7 +145,8 @@
         </div>
     </div>
 </div>
-
-
+    </div>
+</main>
+</div>
 </body>
 </html>

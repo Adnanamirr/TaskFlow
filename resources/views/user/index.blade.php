@@ -20,14 +20,14 @@
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="/" class="{{ request()->is('/') ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        <a href="/" class="{{ Route::currentRouteName() === '/' ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                             Home
                         </a>
                         @auth
-                            <a href="{{ request()->is('user/index') }}" class="{{ request()->is('user/index') ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            <a href="{{ route('user.index') }}" class="{{Route::currentRouteName() === 'user.index' ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                                 Users
                             </a>
-                            <a href="{{ route('tasks.index') }}" class="{{ request()->is('tasks.index') ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            <a href="{{ route('tasks.index') }}" class="{{ Route::currentRouteName() === 'tasks.index' ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                                 Tasks
                             </a>
                         @endauth
@@ -61,56 +61,96 @@
 </nav>
 
 
-<div class="flex justify-center mt-6">
-    <div class="">
-        @include('components.success')
-        @include('components.error')
+<div class="flex h-screen">
+    <aside class="bg-gray-700 text-white w-64 p-4 space-y-6">
+        <nav class="space-y-4">
+            <a href="/" class="block hover:bg-gray-600 px-3 py-2 rounded-md">Dashboard</a>
 
-    </div>
-</div>
+            @auth
 
-<div class="container mx-auto mt-8 px-4">
-    @if($currentUser)
-        <h1 class="text-2xl font-bold text-center mb-6">Hello, {{ $currentUser->name }}</h1>
-    @endif
+                <a href="{{ route('user.index') }}"  class="{{ Route::currentRouteName() === 'user.index' ? 'bg-gray-900 text-white' : 'text-gray-300' }}
+                      hover:bg-gray-600 hover:text-white block px-4 py-2 rounded-md">Users</a>
 
-    @if(count($users) > 0)
-        <ol class="space-y-4">
-            @foreach ($users as $user)
-                <div class="flex items-center justify-between bg-gray-100 p-4 rounded-md shadow-md">
-                    <a href="{{ route('user.show', ['id' => $user->id]) }}" class="text-indigo-600 hover:text-indigo-800 font-medium">
-                        <li>{{ $user->name }}</li>
-                    </a>
-                    <form action="{{ route('user.archive', ['id' => $user->id]) }}" method="POST" class="inline">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md">
-                            Archive
-                        </button>
-                    </form>
+                <a href="{{ route('user.archived') }}" class="{{ Route::currentRouteName() === 'user.archived' ? 'bg-gray-900 text-white' : 'text-gray-300' }}
+                      hover:bg-gray-600 hover:text-white block px-4 py-2 rounded-md">Archived Users</a>
+                <a href="{{ route('user.register') }}"
+                   class="{{ Route::currentRouteName() === 'user.register' ? 'bg-gray-900 text-white' : 'text-gray-300' }}
+                      hover:bg-gray-600 hover:text-white block px-4 py-2 rounded-md">
+                    New User
+                </a>
+            @endauth
+
+            @guest
+                <a href="{{ route('user.register') }}"
+                   class="{{ Route::currentRouteName() === 'user.register' ? 'bg-gray-900 text-white' : 'text-gray-300' }}
+                      hover:bg-gray-600 hover:text-white block px-4 py-2 rounded-md">
+                    Sign Up
+                </a>
+
+                <a href="{{ route('login') }}"
+                   class="{{ Route::currentRouteName() === 'login' ? 'bg-gray-900 text-white' : 'text-gray-300' }}
+                      hover:bg-gray-600 hover:text-white block px-4 py-2 rounded-md">
+                    Log In
+                </a>
+            @endguest
+        </nav>
+    </aside>
+
+
+    <main class="flex-1 p-6 bg-gray-100 overflow-y-auto">
+        <div class="flex justify-center mt-6">
+            <div>
+                @include('components.success')
+                @include('components.error')
+            </div>
+        </div>
+
+        <div class="container mx-auto mt-8">
+            @if($currentUser)
+                <h1 class="text-2xl font-bold text-center mb-6">Hello, {{ $currentUser->name }}</h1>
+            @endif
+
+            @if(count($users) > 0)
+                <ol class="space-y-4">
+                    @foreach ($users as $user)
+                        <div class="flex items-center justify-between bg-gray-100 p-4 rounded-md shadow-md">
+                            <a href="{{ route('user.show', ['id' => $user->id]) }}" class="text-indigo-600 hover:text-indigo-800 font-medium">
+                                <li>{{ $user->name }}</li>
+                            </a>
+                            <form action="{{ route('user.archive', ['id' => $user->id]) }}" method="POST" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" onclick="return confirm('Are you sure you want to archive this task?')" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md">
+                                    Archive
+                                </button>
+                            </form>
+                        </div>
+                    @endforeach
+                </ol>
+                <div class="mt-6 flex justify-center">
+                    {{ $users->links() }}
                 </div>
-            @endforeach
-        </ol>
-    @else
-        <p class="text-center text-gray-600 mt-6">
-            No Users available! Please click
-            <a href="{{ route('user.register') }}" class="text-indigo-500 hover:text-indigo-700 font-medium">
-                Sign Up
-            </a>
-            to register a new user.
-        </p>
-    @endif
+            @else
+                <p class="text-center text-gray-600 mt-6">
+                    No Users available! Please click
+                    <a href="{{ route('user.register') }}" class="text-indigo-500 hover:text-indigo-700 font-medium">
+                        Sign Up
+                    </a>
+                    to register a new user.
+                </p>
+            @endif
 
-    <div class="mt-6 flex justify-center space-x-4">
-        <a href="{{ route('user.register') }}" class="text-white bg-green-500 hover:bg-green-600 px-4 py-2 rounded-md">
-            Sign Up
-        </a>
-        <a href="{{ route('user.archived') }}" class="text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md">
-            Archived Users
-        </a>
-    </div>
+{{--            <div class="mt-6 flex justify-center space-x-4">--}}
+{{--                <a href="{{ route('user.register') }}" class="text-white bg-green-500 hover:bg-green-600 px-4 py-2 rounded-md">--}}
+{{--                    Sign Up--}}
+{{--                </a>--}}
+{{--                <a href="{{ route('user.archived') }}" class="text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md">--}}
+{{--                    Archived Users--}}
+{{--                </a>--}}
+{{--            </div>--}}
+        </div>
+    </main>
 </div>
-
 
 
 </body>

@@ -1,25 +1,130 @@
-@extends('layout.app')
+<!doctype html>
+<html lang="en" class="h-full bg-gray-100">
+<head>
+    <meta charset="UTF-8">
 
-@section('title', 'Task Details')
+    <title>TaskFlow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-@section('content')
-    <div class="container mt-5">
-        <h1 class="text-center">Task Details</h1>
+</head>
+<body class="h-full">
 
-        <div>
-            <h3>{{ $task->title }}</h3>
-            <p><strong>Description:</strong> {{ $task->description }}</p>
 
-            <p><strong>Created At:</strong> {{ $task->created_at->diffForHumans() }}</p>
-            <p><strong>Updated At:</strong> {{ $task->updated_at->diffForHumans() }}</p>
-        </div>
 
-        <div>
-            <a href="{{ route('tasks.index') }}" class="btn btn-primary">Back to Tasks</a>
+<nav class="bg-gray-800 p-4  shadow-md">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="flex h-16 items-center justify-between">
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <img class="h-8 w-8" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company">
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="/" class="{{ Route::currentRouteName() === '/' ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            Home
+                        </a>
+                        @auth
+                            <a href="{{ route('user.index') }}" class="{{Route::currentRouteName() === 'user.index' ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                                Users
+                            </a>
+                            <a href="{{ route('tasks.index') }}" class="{{ Route::currentRouteName() === 'tasks.index' ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                                Tasks
+                            </a>
+                        @endauth
+                    </div>
+                </div>
+            </div>
+            <div class="hidden md:block">
+                <div class="ml-4 flex items-center md:ml-6">
+                    @auth
 
-            @if(!$task->trashed())
-                <a href="{{ route('tasks.edit', ['id' => $task->id]) }}" class="btn btn-secondary">Edit</a>
-            @endif
+                </div>
+                <div class="ml-3">
+                    <form action="{{ route('user.logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="text-white bg-red-600 hover:bg-red-500 px-3 py-2 rounded-md text-sm font-medium">Logout</button>
+                    </form>
+                </div>
+                @else
+                    <div class="ml-3">
+                        <a href="{{ route('user.register') }}" class="{{ request()->is('user.register') ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            Register
+                        </a>
+                        <a href="{{ route('login') }}" class="{{ request()->is('login') ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            Log In
+                        </a>
+                    </div>
+                @endauth
+            </div>
         </div>
     </div>
-@endsection
+</nav>
+
+
+
+
+<div class="flex h-screen">
+    <aside class="bg-gray-700 text-white w-64 p-4 space-y-6">
+        <nav class="space-y-4">
+            <a href="/" class="block hover:bg-gray-600 px-3 py-2 rounded-md">Dashboard</a>
+
+            @auth
+
+                <a href="{{ route('tasks.index') }}"
+                   class="{{ Route::currentRouteName() === 'tasks.index' ? 'bg-gray-900 text-white' : 'text-gray-300' }}
+                      hover:bg-gray-600 hover:text-white block px-4 py-2 rounded-md">
+                    Tasks
+                </a>
+
+                <a href="{{ route('tasks.archived') }}" class="{{ Route::currentRouteName() === 'tasks.archived' ? 'bg-gray-900 text-white' : 'text-gray-300' }}
+                      hover:bg-gray-600 hover:text-white block px-4 py-2 rounded-md">Archived Tasks</a>
+
+                <a href="{{ route('tasks.create') }}"
+                   class="{{ Route::currentRouteName() === 'task.create' ? 'bg-gray-900 text-white' : 'text-gray-300' }}
+                      hover:bg-gray-600 hover:text-white block px-4 py-2 rounded-md">
+                    New Task
+                </a>
+            @endauth
+
+            @guest
+                <a href="{{ route('user.register') }}"
+                   class="{{ Route::currentRouteName() === 'user.register' ? 'bg-gray-900 text-white' : 'text-gray-300' }}
+                      hover:bg-gray-600 hover:text-white block px-4 py-2 rounded-md">
+                    Sign Up
+                </a>
+
+                <a href="{{ route('login') }}"
+                   class="{{ Route::currentRouteName() === 'login' ? 'bg-gray-900 text-white' : 'text-gray-300' }}
+                      hover:bg-gray-600 hover:text-white block px-4 py-2 rounded-md">
+                    Log In
+                </a>
+            @endguest
+        </nav>
+    </aside>
+
+
+    <main class="flex-1 p-6 bg-gray-100 overflow-y-auto">
+
+
+    <div class="container mt-10 max-w-4xl mx-auto p-4 bg-gray-100 rounded shadow">
+        <div class="mb-6">
+            <h1 class="text-2xl font-bold text-gray-800">{{ $task->title }}</h1>
+            <p class="text-gray-600 mt-2"><strong>Email:</strong> {{  $task->description }}</p>
+            <p class="text-gray-600"><strong>Created At:</strong> {{ $task->created_at->diffForHumans() }}</p>
+            <p class="text-gray-600"><strong>Updated At:</strong> {{ $task->updated_at->diffForHumans() }}</p>
+        </div>
+
+        <div class="flex items-center space-x-4">
+            <a href="{{ route('tasks.index') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">
+                Back to Users
+            </a>
+            <a href="{{ route('tasks.edit', ['id' => $task->id]) }}" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md">
+                Edit
+            </a>
+        </div>
+    </div>
+    </main>
+</div>
+</body>
+</html>
+
